@@ -39,7 +39,6 @@
 #define LB 32
 #define LBU 36
 #define LH 33
-// #define LHU 37
 #define LW 35
 #define SB 40
 #define SH 41
@@ -52,3 +51,9 @@
 #define LUI 15
 #define LHU 37
 #define MFC0 16
+
+typedef enum {
+	R_INSTRUCTION,
+	I_INSTRUCTION,
+	J_INSTRUCTION
+}  instruction_type;

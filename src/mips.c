@@ -6,7 +6,7 @@
 
 
 typedef struct string{
-	char value [16];	
+	char value [32];	
 	unsigned char size;
 } string;
 
@@ -147,12 +147,66 @@ void getOpcode(unsigned int opcode, unsigned int funct, string *opcodeString){
 	}
 }
 
+void getRegister(unsigned int reg, string *registerString){
+	if(reg == 0){
+		strcpy(registerString->value, "$zero");
+		registerString->size = 5;
+	}
+	else if(reg == 1){
+		strcpy(registerString->value, "$at");
+		registerString->size = 3;
+	}
+	else if(reg == 2 && reg == 3){
+		sprintf(registerString->value, "$v%d", reg - 2);
+		registerString->size = 2;
+	}
+	else if(reg >= 4 && reg <= 7){
+		sprintf(registerString->value, "$a%d", reg - 4);
+		registerString->size = 	2;
+	}
+	else if(reg >= 8 && reg <= 15){
+		sprintf(registerString->value, "$t%d", reg - 8);
+		registerString->size = 	2;	
+	}
+	else if(reg >= 16 && reg <= 23){
+		sprintf(registerString->value, "$s%d", reg - 16);
+		registerString->size = 	2;	
+	}
+	else if(reg >= 24 && reg <= 25){
+		sprintf(registerString->value, "$t%d", reg - 16);
+		registerString->size = 	2;	
+	}
+	else if(reg >= 26 && reg <= 27){
+		sprintf(registerString->value, "$k%d", reg - 26);
+		registerString->size = 	3;	
+	}
+}
+
+void getImmediate(int imm, string *registerString){
+	sprintf(registerString->value, "%d ", imm);
+	registerString->size = strlen(registerString->value);
+}
+
+instruction_type getInstructionType(unsigned int opcode){
+	switch(opcode){
+		case ALU:
+			return R_INSTRUCTION;
+		case MFC0:
+			return R_INSTRUCTION;
+		case J:
+			return J_INSTRUCTION;
+		case JAL:
+			return J_INSTRUCTION;
+		default:
+			return I_INSTRUCTION;
+	}
+}
+
 void disassemble(
-	const unsigned int instructions
-	// const unsigned int *instructions, 
-	// unsigned char *out, 
-	// unsigned int size_in,
-	// unsigned int size_out
+	const unsigned int *instructions, 
+	unsigned char *out, 
+	unsigned int size_in,
+	unsigned int size_out
 	){
 
 	// #pragma HLS INTERFACE m_axi port=in1  offset=slave bundle=gmem
@@ -166,47 +220,71 @@ void disassemble(
 
 	// Buffer to write string to
 	unsigned char outputBuffer[BUFFER_SIZE];
+	unsigned int bufferPosition = 0;
 
 	// Variables for instruction meta data
 	unsigned int instruction, opcode, rs, rt, rd, shift, funct, imm;
-	
-	string opcodeString, rsString, rtString, rdString, shiftString, functString, immString;
 
-	instruction = instructions;
-	
-	opcode = (instruction & 0xFC000000) >> 26;
-	rs = (instruction >> 21) & 0x1F;
-	rt = (instruction >> 16) & 0x1F;
-	rd = (instruction >> 11) & 0x1F;
-	shift = (instruction >> 6) & 0x1F;
-	funct = instruction & 0x3F;
-	imm = instruction & 0xFFFF;
+	// String declerations	
+	string opcodeString, rsString, rtString, rdString, shiftString, functString, immString, instructionString;
 
-	getOpcode(opcode, funct, &opcodeString);
-	
-	printf("%s\n", opcodeString.value);
+	for(int i = 0; i < size_in; i++){
 
-	// opcodeString = getOpcode(opcode, &opcodeString);
+		instruction = instructions[i];
 
-	// printf("%s\n", opcodeString->value);
-	// printf("%x\n", opcode);	
-	// printf("%x\n", rs);	
-	// printf("%x\n", rt);	
-	// printf("%x\n", rd);	
-	// printf("%x\n", shift);	
-	// printf("%x\n", funct);	
-	
-}
+		// Get appropriate values of instruction	
+		opcode = (instruction & 0xFC000000) >> 26;
+		rs = (instruction >> 21) & 0x1F;
+		rt = (instruction >> 16) & 0x1F;
+		rd = (instruction >> 11) & 0x1F;
+		shift = (instruction >> 6) & 0x1F;
+		funct = instruction & 0x3F;
+		imm = instruction & 0xFFFF;
 
-int main(int argc, char** argv){
-	if (argc < 2){
-		printf("Please provide path to the file name.\n");
-		return 0;
+		// GET ALL POSSIBLE INSTRUCTION PIECES IN PARALLEL
+		getOpcode(opcode, funct, &opcodeString);
+		getRegister(rs, &rsString);
+		getRegister(rt, &rtString);
+		getRegister(rd, &rdString);
+		getImmediate(imm, &immString);
+
+		// FIGURE OUT STRING FORMAT FOR INSTRUCTION
+		switch(getInstructionType(opcode)){
+			case R_INSTRUCTION:
+				sprintf(instructionString.value, "%s%s, %s, %s\n", opcodeString.value, rsString.value, rtString.value, rdString.value);
+				instructionString.size = opcodeString.size + rsString.size + rtString.size + rdString.size + 5;
+			case J_INSTRUCTION:
+				sprintf(instructionString.value, "%s%s\n", opcodeString.value, immString.value);
+				instructionString.size = opcodeString.size + immString.size + 2;
+			default:
+				sprintf(instructionString.value, "%s %s, %s, %s\n", opcodeString.value, rsString.value, rtString.value, immString.value);
+				instructionString.size = opcodeString.size + rsString.size + rtString.size + immString.size + 2;
+		}
+
+		// WRITE STRING TO BUFFER
+		// USE PRAMA TO OPTIMIZE PIPELINE
+		for(unsigned int j = 0; j < (instructionString.size); j++){
+			outputBuffer[j + bufferPosition] = instructionString.value[j];
+		}
+		bufferPosition += instructionString.size;
 	}
-	// 0001 0001 0000 0000 0000 0000 0000 0101
-	// disassemble(0xAAAAAAAA);
-	disassemble(0x03E0F83F);
-	// printf("%s\n", argv[1]);
-	return 0;
+
+	for(int i = 0; i < bufferPosition; i++){
+		out[i] = outputBuffer[i];
+	}
+	printf("%s", out);
 
 }
+
+// int main(int argc, char** argv){
+// 	if (argc < 2){
+// 		printf("Please provide path to the file name.\n");
+// 		return 0;
+// 	}
+// 	// 0001 0001 0000 0000 0000 0000 0000 0101
+// 	disassemble(0xAAAAAAAA);
+// 	// disassemble(0x0123F83F);
+// 	// printf("%s\n", argv[1]);
+// 	return 0;
+
+// }
