@@ -1,3 +1,6 @@
+#ifndef __DEFS_H__
+#define __DEFS_H__
+
 #define ALU 0
 #define ADD 32
 #define ADDU 33
@@ -61,3 +64,5 @@ typedef enum {
 	J_INSTRUCTION,
 	L_INSTRUCTION
 }  instruction_type;
+
+#endif

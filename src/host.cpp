@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <stdint.h>
 #include <stdio.h>
-#include "disassembler.c"
+#include "disassembler.h"
 
 #define DATA_SIZE 16384
 
@@ -34,7 +34,6 @@ unsigned int getWord(unsigned char* buffer, unsigned int* byte){
 }
 
 int main(int argc, char** argv){
-	
 	if (argc < 2){
 		printf("Please provide path to the file name.\n");
 		return 0;
@@ -169,10 +168,9 @@ int main(int argc, char** argv){
 				else{
 					size = DATA_SIZE;
 				}
-				disassemble(buffer + offset, size);
+				// disassemble(buffer + offset, size);
 			}
 		}
-		
 	}
 
 	// byte = phoff;
@@ -185,7 +183,6 @@ int main(int argc, char** argv){
 	// 	unsigned int p_memsz = getWord(buffer, &byte);
 	// 	unsigned int p_flags = getWord(buffer, &byte);
 	// 	unsigned int p_align = getWord(buffer, &byte);
-		
 	// }
 
 	fclose(fPtr);

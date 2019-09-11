@@ -1,11 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-
-#include "defs.h"
-#include "fpga_string.h"
-
-
-#define BUFFER_SIZE 4096
+#include "disassembler.h"
 
 // typedef struct fpga_string{
 // 	char value [32];	
