@@ -273,10 +273,10 @@ void disassemble(
 
 	for(int i = 0; i < size_in; i += 4){
 		instruction = 	(instructions[i] << 24) | 
-
 						(instructions[i + 1] << 16)|
 						(instructions[i + 2] << 8) |
-						(instructions[i + 3])	;
+						(instructions[i + 3]);
+
 		// Get appropriate values of instruction	
 		opcode = (instruction & 0xFC000000) >> 26;
 		rs = (instruction >> 21) & 0x1F;
@@ -288,7 +288,6 @@ void disassemble(
 
 		// GET ALL POSSIBLE INSTRUCTION PIECES IN PARALLEL
 		getOpcode(opcode, funct, &opcodeString);
-		// printf("%d | %d ", opcode, funct);
 		getRegister(rs, &rsString);
 		getRegister(rt, &rtString);
 		getRegister(rd, &rdString);
