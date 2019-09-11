@@ -173,18 +173,6 @@ int main(int argc, char** argv){
 		}
 	}
 
-	// byte = phoff;
-	// for(int i = 0; i < phnum; i++){
-	// 	unsigned int p_type = getWord(buffer, &byte);
-	// 	unsigned int p_offset = getWord(buffer, &byte);
-	// 	unsigned int p_vaddr = getWord(buffer, &byte);
-	// 	unsigned int p_paddr = getWord(buffer, &byte);
-	// 	unsigned int p_filesz = getWord(buffer, &byte);
-	// 	unsigned int p_memsz = getWord(buffer, &byte);
-	// 	unsigned int p_flags = getWord(buffer, &byte);
-	// 	unsigned int p_align = getWord(buffer, &byte);
-	// }
-
 	fclose(fPtr);
 	
 	return 0;

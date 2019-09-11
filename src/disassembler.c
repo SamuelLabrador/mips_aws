@@ -1,280 +1,218 @@
 #include "disassembler.h"
 
-// typedef struct fpga_string{
-// 	char value [32];	
-// 	unsigned char size;
-// } fpga_string;
+
 
 void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeString){
 	switch(opcode){
 		case ALU:
 			switch(funct){
 				case SLL:
-					strcpy(opcodeString->value, "SLL ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "SLL ");
 					break;
 				case SRL:
-					strcpy(opcodeString->value, "SRL ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "SRL ");
 					break;
 				case SRA:	
-					strcpy(opcodeString->value, "SRA ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "SRA ");
 					break;
 				case SLLV:
-					strcpy(opcodeString->value, "SLLV ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "SLLV ");
 					break;
 				case SRAV:
-					strcpy(opcodeString->value, "SRAV ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "SRAV ");
 					break;
 				case JR:
-					strcpy(opcodeString->value, "JR ");
-					opcodeString->size = 3;
+					fpga_str_char_cpy(opcodeString, "JR ");
 					break;
 				case JALR:
-					strcpy(opcodeString->value, "JALR ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "JALR ");
 					break;
 				case ADD:
-					strcpy(opcodeString->value, "ADD ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "ADD ");
 					break;
 				case ADDU:
-					strcpy(opcodeString->value, "ADDU ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "ADDU ");
 					break;
 				case AND:
-					strcpy(opcodeString->value, "AND ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "AND ");
 					break;
 				case DIV:
-					strcpy(opcodeString->value, "DIV ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "DIV ");
 					break;
 				case DIVU:
-					strcpy(opcodeString->value, "DIVU ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "DIVU ");
 					break;
 				case MFHI:
-					strcpy(opcodeString->value, "MFHI ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "MFHI ");
 					break;
 				case MTHI:
-					strcpy(opcodeString->value, "MTHI ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "MTHI ");
 					break;
 				case MFLO:
-					strcpy(opcodeString->value, "MFLO ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "MFLO ");
 					break;
 				case MTLO:
-					strcpy(opcodeString->value, "MTLO ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "MTLO ");
 					break;
 				case MULT:
-					strcpy(opcodeString->value, "MULT ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "MULT ");
 				case MULTU:
-					strcpy(opcodeString->value, "MULTU ");
-					opcodeString->size = 6;
+					fpga_str_char_cpy(opcodeString, "MULTU ");
 					break;
 				case NOR:
-					strcpy(opcodeString->value, "NOR ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "NOR ");
 					break;
 				case XOR:
-					strcpy(opcodeString->value, "XOR ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "XOR ");
 					break;
 				case OR:
-					strcpy(opcodeString->value, "OR ");
-					opcodeString->size = 3;
+					fpga_str_char_cpy(opcodeString, "OR ");
 					break;
 				case SLT:
-					strcpy(opcodeString->value, "SLT ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "SLT ");
 					break;
 				case SLTU:
-					strcpy(opcodeString->value, "SLTU ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "SLTU ");
 					break;
 				case SUB:
-					strcpy(opcodeString->value, "SUB ");
-					opcodeString->size = 4;
+					fpga_str_char_cpy(opcodeString, "SUB ");
 					break;
 				case SUBU:
-					strcpy(opcodeString->value, "SUBU ");
-					opcodeString->size = 5;
+					fpga_str_char_cpy(opcodeString, "SUBU ");
 					break;
 				case SUBIU:
-					strcpy(opcodeString->value, "SUBIU ");
-					opcodeString->size = 6;
+					fpga_str_char_cpy(opcodeString, "SUBIU ");
 					break;	
 				case BREAK:
-					strcpy(opcodeString->value, "BREAK ");
-					opcodeString->size = 6;
+					fpga_str_char_cpy(opcodeString, "BREAK ");
 					break;
 				case SYSCALL:
-					strcpy(opcodeString->value, "SYSCALL ");
-					opcodeString->size = 8;
+					fpga_str_char_cpy(opcodeString, "SYSCALL ");
 					break;
 			}
 			break;
 		case J:
-			strcpy(opcodeString->value, "J ");
-			opcodeString->size = 2;
+			fpga_str_char_cpy(opcodeString, "J ");
 			break;
 		case JAL:
-			strcpy(opcodeString->value, "JAL ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "JAL ");
 			break;
 		case ADDI:
-			strcpy(opcodeString->value, "ADDI ");
-			opcodeString->size = 5;
+			fpga_str_char_cpy(opcodeString, "ADDI ");
 			break;
 		case ADDIU:
-			strcpy(opcodeString->value, "ADDIU ");
-			opcodeString->size = 6;
+			fpga_str_char_cpy(opcodeString, "ADDIU ");
 			break;	
 		case ANDI:
-			strcpy(opcodeString->value, "ANDI ");
-			opcodeString->size = 5;
+			fpga_str_char_cpy(opcodeString, "ANDI ");
 			break;
 		case BEQ:
-			strcpy(opcodeString->value, "BEQ ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "BEQ ");
 			break;
 		case BGEZ:
-			strcpy(opcodeString->value, "BGEZ ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "BGEZ ");
 			break;
 		case BLEZ:
-			strcpy(opcodeString->value, "BLEZ ");
-			opcodeString->size = 5;
+			fpga_str_char_cpy(opcodeString, "BLEZ ");
 			break;
 		case BNE:
-			strcpy(opcodeString->value, "BNE ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "BNE ");
 			break;
 		case BGTZ:
-			strcpy(opcodeString->value, "BGTZ ");
-			opcodeString->size = 5;
+			fpga_str_char_cpy(opcodeString, "BGTZ ");
 			break;
 
 		case LB:
-			strcpy(opcodeString->value, "LB ");
-			opcodeString->size = 3;
+			fpga_str_char_cpy(opcodeString, "LB ");
 			break;
 		case LH:
-			strcpy(opcodeString->value, "LH ");
-			opcodeString->size = 3;
+			fpga_str_char_cpy(opcodeString, "LH ");
 			break;
 		case LWL:
-			strcpy(opcodeString->value, "LWL ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "LWL ");
 			break;
 		case LW:
-			strcpy(opcodeString->value, "LW ");
-			opcodeString->size = 3;
+			fpga_str_char_cpy(opcodeString, "LW ");
 			break;
 		case LBU:
-			strcpy(opcodeString->value, "LBU ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "LBU ");
 			break;
 		case LHU:
-			strcpy(opcodeString->value, "LHU ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "LHU ");
 			break;
 		case LWR:
-			strcpy(opcodeString->value, "LWR ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "LWR ");
 			break;
 		case LUI:
-			strcpy(opcodeString->value, "LUI ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "LUI ");
 			break;
 		case ORI:
-			strcpy(opcodeString->value, "ORI ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "ORI ");
 			break;
 		case XORI:
-			strcpy(opcodeString->value, "XORI ");
-			opcodeString->size = 5;
+			fpga_str_char_cpy(opcodeString, "XORI ");
 			break;
 		case SB:
-			strcpy(opcodeString->value, "SB ");
-			opcodeString->size = 3;
+			fpga_str_char_cpy(opcodeString, "SB ");
 			break;
 		case SH:
-			strcpy(opcodeString->value, "SH ");
-			opcodeString->size = 3;
+			fpga_str_char_cpy(opcodeString, "SH ");
 			break;
 		case SWL:
-			strcpy(opcodeString->value, "SWL ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "SWL ");
 			break;
 		case SW:
-			strcpy(opcodeString->value, "SW ");
-			opcodeString->size = 3;
+			fpga_str_char_cpy(opcodeString, "SW ");
 			break;
 		case SWR:
-			strcpy(opcodeString->value, "SWR ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "SWR ");
 			break;
 		case SWC1:
-			strcpy(opcodeString->value, "SWC1 ");
-			opcodeString->size = 5;
+			fpga_str_char_cpy(opcodeString, "SWC1 ");
 			break;
 		case LWC1:
-			strcpy(opcodeString->value, "LWC1 ");
-			opcodeString->size = 5;
+			fpga_str_char_cpy(opcodeString, "LWC1 ");
 			break;
 		default:
-			strcpy(opcodeString->value, "UNK ");
-			opcodeString->size = 4;
+			fpga_str_char_cpy(opcodeString, "UNK ");
 	}
 }
 
 void getRegister(unsigned int reg, fpga_string *registerString){
 	if(reg == 0){
-		strcpy(registerString->value, "$zero");
-		registerString->size = 5;
+		fpga_str_char_cpy(registerString, "zero");
 	}
 	else if(reg == 1){
-		strcpy(registerString->value, "$at");
-		registerString->size = 3;
+		fpga_str_char_cpy(registerString, "at");
 	}
 	else if(reg == 2 && reg == 3){
-		sprintf(registerString->value, "$v%d", reg - 2);
-		registerString->size = 2;
+		fpga_str_char_cpy(registerString, "v");
+		fpga_str_int(registerString, reg);
 	}
 	else if(reg >= 4 && reg <= 7){
-		sprintf(registerString->value, "$a%d", reg - 4);
-		registerString->size = 	2;
+		fpga_str_char_cpy(registerString, "a");
+		fpga_str_int(registerString, reg - 4);
 	}
 	else if(reg >= 8 && reg <= 15){
-		sprintf(registerString->value, "$t%d", reg - 8);
-		registerString->size = 	2;	
+		fpga_str_char_cpy(registerString, "t");
+		fpga_str_int(registerString, reg - 8);
 	}
 	else if(reg >= 16 && reg <= 23){
-		sprintf(registerString->value, "$s%d", reg - 16);
-		registerString->size = 	2;	
+		fpga_str_char_cpy(registerString, "s");
+		fpga_str_int(registerString, reg - 16);
 	}
 	else if(reg >= 24 && reg <= 25){
-		sprintf(registerString->value, "$t%d", reg - 16);
-		registerString->size = 	2;	
+		fpga_str_char_cpy(registerString, "t");
+		fpga_str_int(registerString, reg - 16);
 	}
 	else if(reg >= 26 && reg <= 27){
-		sprintf(registerString->value, "$k%d", reg - 26);
-		registerString->size = 	3;	
+		fpga_str_char_cpy(registerString, "k");
+		fpga_str_int(registerString, reg - 26);
 	}
 }
 
 void getImmediate(int imm, fpga_string *registerString){
-	sprintf(registerString->value, "%d", imm);
-	registerString->size = strlen(registerString->value);
+	fpga_str_int(registerString, imm);
 }
 
 instruction_type getInstructionType(unsigned int opcode){
@@ -292,9 +230,9 @@ instruction_type getInstructionType(unsigned int opcode){
 
 void disassemble(
 	unsigned char *instructions, 
-	// unsigned char *out, 
-	unsigned int size_in
-	// unsigned int size_out
+	unsigned char *out, 
+	unsigned int size_in,
+	unsigned int size_out
 	){
 
 	// #pragma HLS INTERFACE m_axi port=in1  offset=slave bundle=gmem
@@ -315,6 +253,14 @@ void disassemble(
 
 	// String declerations	
 	fpga_string opcodeString, rsString, rtString, rdString, shiftString, functString, immString, instructionString;
+
+	fpga_string tab, space, newline, lparen, rparen, comma;
+
+	fpga_str_init(&tab, "\t");
+	fpga_str_init(&comma, ",");
+	fpga_str_init(&newline, "\n");
+	fpga_str_init(&lparen, "(");
+	fpga_str_init(&rparen, ")");
 
 	for(int i = 0; i < size_in; i += 4){
 
@@ -342,24 +288,42 @@ void disassemble(
 		// FIGURE OUT STRING FORMAT FOR INSTRUCTION
 		switch(getInstructionType(opcode)){
 			case R_INSTRUCTION:
-				sprintf(instructionString.value, "%s%s, %s, %s\n", opcodeString.value, rsString.value, rtString.value, rdString.value);
-				instructionString.size = opcodeString.size + rsString.size + rtString.size + rdString.size + 5;
+				fpga_str_append(&instructionString, &opcodeString);
+				fpga_str_append(&instructionString, &tab);
+				fpga_str_append(&instructionString, &rsString);
+				fpga_str_append(&instructionString, &comma);
+				fpga_str_append(&instructionString, &rtString);
+				fpga_str_append(&instructionString, &comma);
+				fpga_str_append(&instructionString, &rdString);
+				fpga_str_append(&instructionString, &newline);
 				break;
 			case J_INSTRUCTION:
-				sprintf(instructionString.value, "%s%s\n", opcodeString.value, immString.value);
-				instructionString.size = opcodeString.size + immString.size + 2;
+				fpga_str_append(&instructionString, &opcodeString);
+				fpga_str_append(&instructionString, &tab);
+				fpga_str_append(&instructionString, &immString);
+				fpga_str_append(&instructionString, &newline);
 				break;
 			case L_INSTRUCTION:
-				sprintf(instructionString.value, "%s%s %s(%s)\n", opcodeString.value, rtString.value, immString.value, rsString.value);
-				instructionString.size = opcodeString.size + rtString.size + immString.size + rsString.size + 4;
+				
+				fpga_str_append(&instructionString, &opcodeString);
+				fpga_str_append(&instructionString, &tab);
+				fpga_str_append(&instructionString, &immString);
+				fpga_str_append(&instructionString, &lparen);
+				fpga_str_append(&instructionString, &rsString);
+				fpga_str_append(&instructionString, &rparen);
+				fpga_str_append(&instructionString, &newline);
 				break;
 			default:
-				sprintf(instructionString.value, "%s %s, %s, %s\n", opcodeString.value, rsString.value, rtString.value, immString.value);
-				instructionString.size = opcodeString.size + rsString.size + rtString.size + immString.size + 2;
+				fpga_str_append(&instructionString, &opcodeString);
+				fpga_str_append(&instructionString, &tab);
+				fpga_str_append(&instructionString, &rsString);
+				fpga_str_append(&instructionString, &comma);
+				fpga_str_append(&instructionString, &rtString);
+				fpga_str_append(&instructionString, &comma);
+				fpga_str_append(&instructionString, &immString);
+				fpga_str_append(&instructionString, &newline);
 		}
 
-		printf("%s", instructionString.value);
-		
 		// WRITE STRING TO BUFFER
 		// USE PRAMA TO OPTIMIZE PIPELINE
 		for(unsigned int j = 0; j < (instructionString.size); j++){
@@ -367,9 +331,9 @@ void disassemble(
 		}
 		bufferPosition += instructionString.size;
 	}
-	// printf("%s", outputBuffer);
-	for(int i = 0; i < bufferPosition; i++){
+
+	for(int j = 0; j < bufferPosition; j++){
 		// out[i] = outputBuffer[i];
 	}
-	// printf("%s", out);
+
 }

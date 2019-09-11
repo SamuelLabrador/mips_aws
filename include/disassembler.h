@@ -1,9 +1,6 @@
 #ifndef __DISASSEMBLER_H__
 #define __DISASSEMBLER_H__
 
-#include <string.h>
-#include <stdio.h>
-
 #include "defs.h"
 #include "fpga_string.h"
 
@@ -17,6 +14,10 @@ void getImmediate(int, fpga_string* );
 
 instruction_type getInstructionType(unsigned int);
 
-void disassemble(unsigned char*, unsigned int);
+void disassemble(
+		unsigned char *instructions,
+		unsigned char *out,
+		unsigned int size_in,
+		unsigned int size_out);
 
 #endif
