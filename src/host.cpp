@@ -168,7 +168,7 @@ int main(int argc, char** argv){
 				else{
 					size = DATA_SIZE;
 				}
-				// disassemble(buffer + offset, size);
+				disassemble(buffer + offset, size);
 			}
 		}
 	}

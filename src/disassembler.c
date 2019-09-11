@@ -12,79 +12,123 @@ void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeStrin
 				case SLL:
 					strcpy(opcodeString->value, "SLL ");
 					opcodeString->size = 4;
-				case ADD:
-					strcpy(opcodeString->value, "ADD ");
+					break;
+				case SRL:
+					strcpy(opcodeString->value, "SRL ");
 					opcodeString->size = 4;
-				case ADDU:
-					strcpy(opcodeString->value, "ADDU ");
+					break;
+				case SRA:	
+					strcpy(opcodeString->value, "SRA ");
+					opcodeString->size = 4;
+					break;
+				case SLLV:
+					strcpy(opcodeString->value, "SLLV ");
 					opcodeString->size = 5;
-				case AND:
-					strcpy(opcodeString->value, "AND ");
-					opcodeString->size = 4;
-				case DIV:
-					strcpy(opcodeString->value, "DIV ");
-					opcodeString->size = 4;
-				case DIVU:
-					strcpy(opcodeString->value, "DIVU ");
+					break;
+				case SRAV:
+					strcpy(opcodeString->value, "SRAV ");
 					opcodeString->size = 5;
+					break;
 				case JR:
 					strcpy(opcodeString->value, "JR ");
 					opcodeString->size = 3;
+					break;
+				case JALR:
+					strcpy(opcodeString->value, "JALR ");
+					opcodeString->size = 5;
+					break;
+				case ADD:
+					strcpy(opcodeString->value, "ADD ");
+					opcodeString->size = 4;
+					break;
+				case ADDU:
+					strcpy(opcodeString->value, "ADDU ");
+					opcodeString->size = 5;
+					break;
+				case AND:
+					strcpy(opcodeString->value, "AND ");
+					opcodeString->size = 4;
+					break;
+				case DIV:
+					strcpy(opcodeString->value, "DIV ");
+					opcodeString->size = 4;
+					break;
+				case DIVU:
+					strcpy(opcodeString->value, "DIVU ");
+					opcodeString->size = 5;
+					break;
 				case MFHI:
 					strcpy(opcodeString->value, "MFHI ");
 					opcodeString->size = 5;
+					break;
 				case MTHI:
 					strcpy(opcodeString->value, "MTHI ");
 					opcodeString->size = 5;
+					break;
 				case MFLO:
 					strcpy(opcodeString->value, "MFLO ");
 					opcodeString->size = 5;
+					break;
 				case MTLO:
 					strcpy(opcodeString->value, "MTLO ");
 					opcodeString->size = 5;
+					break;
 				case MULT:
 					strcpy(opcodeString->value, "MULT ");
 					opcodeString->size = 5;
 				case MULTU:
 					strcpy(opcodeString->value, "MULTU ");
 					opcodeString->size = 6;
+					break;
 				case NOR:
 					strcpy(opcodeString->value, "NOR ");
 					opcodeString->size = 4;
+					break;
 				case XOR:
 					strcpy(opcodeString->value, "XOR ");
 					opcodeString->size = 4;
+					break;
 				case OR:
 					strcpy(opcodeString->value, "OR ");
 					opcodeString->size = 3;
+					break;
 				case SLT:
 					strcpy(opcodeString->value, "SLT ");
 					opcodeString->size = 4;
+					break;
 				case SLTU:
 					strcpy(opcodeString->value, "SLTU ");
 					opcodeString->size = 5;
-				case SRL:
-					strcpy(opcodeString->value, "SRL ");
-					opcodeString->size = 4;
-				case SRA:
-					strcpy(opcodeString->value, "SRA ");
-					opcodeString->size = 4;
+					break;
 				case SUB:
 					strcpy(opcodeString->value, "SUB ");
 					opcodeString->size = 4;
+					break;
 				case SUBU:
 					strcpy(opcodeString->value, "SUBU ");
 					opcodeString->size = 5;
+					break;
+				case SUBIU:
+					strcpy(opcodeString->value, "SUBIU ");
+					opcodeString->size = 6;
+					break;	
 				case BREAK:
 					strcpy(opcodeString->value, "BREAK ");
 					opcodeString->size = 6;
+					break;
 				case SYSCALL:
 					strcpy(opcodeString->value, "SYSCALL ");
 					opcodeString->size = 8;
-				case JALR:
-					strcpy(opcodeString->value, "JALR ");
-					opcodeString->size = 5;
+					break;
 			}
+			break;
+		case J:
+			strcpy(opcodeString->value, "J ");
+			opcodeString->size = 2;
+			break;
+		case JAL:
+			strcpy(opcodeString->value, "JAL ");
+			opcodeString->size = 4;
 			break;
 		case ADDI:
 			strcpy(opcodeString->value, "ADDI ");
@@ -118,16 +162,21 @@ void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeStrin
 			strcpy(opcodeString->value, "BGTZ ");
 			opcodeString->size = 5;
 			break;
-		case J:
-			strcpy(opcodeString->value, "J ");
-			opcodeString->size = 2;
-			break;
-		case JAL:
-			strcpy(opcodeString->value, "JAL ");
-			opcodeString->size = 4;
-			break;
+
 		case LB:
 			strcpy(opcodeString->value, "LB ");
+			opcodeString->size = 3;
+			break;
+		case LH:
+			strcpy(opcodeString->value, "LH ");
+			opcodeString->size = 3;
+			break;
+		case LWL:
+			strcpy(opcodeString->value, "LWL ");
+			opcodeString->size = 4;
+			break;
+		case LW:
+			strcpy(opcodeString->value, "LW ");
 			opcodeString->size = 3;
 			break;
 		case LBU:
@@ -138,21 +187,21 @@ void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeStrin
 			strcpy(opcodeString->value, "LHU ");
 			opcodeString->size = 4;
 			break;
+		case LWR:
+			strcpy(opcodeString->value, "LWR ");
+			opcodeString->size = 4;
+			break;
 		case LUI:
 			strcpy(opcodeString->value, "LUI ");
 			opcodeString->size = 4;
 			break;
-		case LW:
-			strcpy(opcodeString->value, "LW ");
-			opcodeString->size = 3;
-			break;
-		case MFC0:
-			strcpy(opcodeString->value, "MFC0 ");
-			opcodeString->size = 5;
-			break;
 		case ORI:
 			strcpy(opcodeString->value, "ORI ");
 			opcodeString->size = 4;
+			break;
+		case XORI:
+			strcpy(opcodeString->value, "XORI ");
+			opcodeString->size = 5;
 			break;
 		case SB:
 			strcpy(opcodeString->value, "SB ");
@@ -162,17 +211,25 @@ void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeStrin
 			strcpy(opcodeString->value, "SH ");
 			opcodeString->size = 3;
 			break;
-		case SLTI:
-			strcpy(opcodeString->value, "SLTI ");
-			opcodeString->size = 5;
-			break;
-		case SLTIU:
-			strcpy(opcodeString->value, "SLTIU ");
-			opcodeString->size = 6;
+		case SWL:
+			strcpy(opcodeString->value, "SWL ");
+			opcodeString->size = 4;
 			break;
 		case SW:
 			strcpy(opcodeString->value, "SW ");
 			opcodeString->size = 3;
+			break;
+		case SWR:
+			strcpy(opcodeString->value, "SWR ");
+			opcodeString->size = 4;
+			break;
+		case SWC1:
+			strcpy(opcodeString->value, "SWC1 ");
+			opcodeString->size = 5;
+			break;
+		case LWC1:
+			strcpy(opcodeString->value, "LWC1 ");
+			opcodeString->size = 5;
 			break;
 		default:
 			strcpy(opcodeString->value, "UNK ");
@@ -224,16 +281,13 @@ instruction_type getInstructionType(unsigned int opcode){
 	if(opcode == 0){
 		return R_INSTRUCTION;
 	}
-	if(opcode >= 2 && opcode <= 3){
+	if(opcode == 2 || opcode == 3){
 		return J_INSTRUCTION;
 	}
 	if(opcode >= 8 && opcode <= 15){
 		return I_INSTRUCTION;
 	}
-	// if(opcode >= 32 && opcode <= 57){
-	// printf("L INSTRUCTION");
 	return L_INSTRUCTION;
-	// }
 }
 
 void disassemble(
@@ -262,9 +316,8 @@ void disassemble(
 	// String declerations	
 	fpga_string opcodeString, rsString, rtString, rdString, shiftString, functString, immString, instructionString;
 
-	printf("%d\n", size_in);
-
 	for(int i = 0; i < size_in; i += 4){
+
 		instruction = 	(instructions[i] << 24) | 
 						(instructions[i + 1] << 16)|
 						(instructions[i + 2] << 8) |
@@ -304,11 +357,13 @@ void disassemble(
 				sprintf(instructionString.value, "%s %s, %s, %s\n", opcodeString.value, rsString.value, rtString.value, immString.value);
 				instructionString.size = opcodeString.size + rsString.size + rtString.size + immString.size + 2;
 		}
+
 		printf("%s", instructionString.value);
+		
 		// WRITE STRING TO BUFFER
 		// USE PRAMA TO OPTIMIZE PIPELINE
 		for(unsigned int j = 0; j < (instructionString.size); j++){
-			outputBuffer[j + bufferPosition] = instructionString.value[j];
+			// outputBuffer[j + bufferPosition] = instructionString.value[j];
 		}
 		bufferPosition += instructionString.size;
 	}
@@ -318,19 +373,3 @@ void disassemble(
 	}
 	// printf("%s", out);
 }
-
-// int main(int argc, char** argv){
-
-// 	if (argc < 2){
-// 		printf("Please provide path to the file name.\n");
-// 		return 0;
-// 	}
-
-	
-	
-	// disassemble(0xAAAAAAAA);
-	// disassemble(0x0123F83F);
-	// printf("%s\n", argv[1]);
-	// return 0;
-
-// }
