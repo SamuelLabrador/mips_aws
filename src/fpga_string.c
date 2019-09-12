@@ -2,17 +2,19 @@
 
 void fpga_str_init(fpga_string *target, char *value){
 	int i = 0;
+	
 	while(value[i] != '\0'){
 		target->value[i] = value[i];
 		i++;
 	}
+
 	target->value[i] = '\0';
 	target->size = i;
 }
 
 unsigned int fpga_strcpy(fpga_string *target, fpga_string *source){
 	int i;
-	// COPY THE NULL BYTE
+	
 	for(i = 0; i <= source->size; i++){
 // #pragma HLS unroll
 		target->value[i] = source->value[i];
@@ -38,6 +40,7 @@ unsigned int fpga_str_append(fpga_string* target, fpga_string *rhs){
 	return fpga_str_insert(target, rhs, target->size);
 }
 
+// Appends integer in string representation to the end of the string
 unsigned int fpga_str_int(fpga_string *target, int source){
 	
 	int i = target->size;

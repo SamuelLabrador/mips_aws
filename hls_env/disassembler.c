@@ -119,6 +119,7 @@ void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeStrin
 		case BGTZ:
 			fpga_str_char_cpy(opcodeString, "BGTZ ");
 			break;
+
 		case LB:
 			fpga_str_char_cpy(opcodeString, "LB ");
 			break;
@@ -226,7 +227,7 @@ instruction_type getInstructionType(unsigned int opcode){
 }
 
 void disassemble(
-	unsigned char *instructions, 
+	unsigned char instructions[BUFFER_SIZE],
 	unsigned char *out, 
 	unsigned int size_in,
 	unsigned int size_out
@@ -332,4 +333,5 @@ void disassemble(
 	for(int j = 0; j < bufferPosition; j++){
 		// out[i] = outputBuffer[i];
 	}
+
 }
