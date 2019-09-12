@@ -25,6 +25,7 @@ unsigned int fpga_str_char_cpy(fpga_string *target, char *source){
 	unsigned int i = 0;
 
 	while(source[i] != '\0'){
+#pragma HLS pipeline
 		target->value[i] = source[i];
 
 		i++;

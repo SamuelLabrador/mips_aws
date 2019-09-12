@@ -261,7 +261,7 @@ void disassemble(
 	fpga_str_init(&rparen, ")");
 
 	for(int i = 0; i < size_in; i += 4){
-
+#pragma HLS pipeline
 		instruction = 	(instructions[i] << 24) | 
 						(instructions[i + 1] << 16)|
 						(instructions[i + 2] << 8) |
