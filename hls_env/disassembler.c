@@ -54,6 +54,7 @@ void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeStrin
 					break;
 				case MULT:
 					fpga_str_char_cpy(opcodeString, "MULT ");
+					break;
 				case MULTU:
 					fpga_str_char_cpy(opcodeString, "MULTU ");
 					break;
@@ -119,7 +120,6 @@ void getOpcode(unsigned int opcode, unsigned int funct, fpga_string *opcodeStrin
 		case BGTZ:
 			fpga_str_char_cpy(opcodeString, "BGTZ ");
 			break;
-
 		case LB:
 			fpga_str_char_cpy(opcodeString, "LB ");
 			break;
@@ -217,32 +217,34 @@ instruction_type getInstructionType(unsigned int opcode){
 	if(opcode == 0){
 		return R_INSTRUCTION;
 	}
-	if(opcode == 2 || opcode == 3){
+	else if(opcode == 2 || opcode == 3){
 		return J_INSTRUCTION;
 	}
-	if(opcode >= 8 && opcode <= 15){
+	else if(opcode >= 8 && opcode <= 15){
 		return I_INSTRUCTION;
 	}
-	return L_INSTRUCTION;
+	else{
+		return L_INSTRUCTION;
+	}
 }
 
 void disassemble(
 	unsigned char instructions[BUFFER_SIZE],
-	unsigned char *out, 
+	unsigned char out[BUFFER_SIZE],
 	unsigned int size_in,
 	unsigned int size_out
 	){
 
-	// #pragma HLS INTERFACE m_axi port=in1  offset=slave bundle=gmem
-	// #pragma HLS INTERFACE m_axi port=in2  offset=slave bundle=gmem
-	// #pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem
-	// #pragma HLS INTERFACE s_axilite port=in1  bundle=control
-	// #pragma HLS INTERFACE s_axilite port=in2  bundle=control
-	// #pragma HLS INTERFACE s_axilite port=out bundle=control
-	// #pragma HLS INTERFACE s_axilite port=size bundle=control
-	// #pragma HLS INTERFACE s_axilite port=return bundle=control
+// #pragma HLS INTERFACE m_axi port=instructions  offset=slave bundle=gmem
+// #pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem
+// #pragma HLS INTERFACE s_axilite port=in1  bundle=control
+// #pragma HLS INTERFACE s_axilite port=in2  bundle=control
+// #pragma HLS INTERFACE s_axilite port=out bundle=control
+// #pragma HLS INTERFACE s_axilite port=size bundle=control
+// #pragma HLS INTERFACE s_axilite port=return bundle=control
 
 	// Buffer to write fpga_string to
+	unsigned char inputBuffer[BUFFER_SIZE];
 	unsigned char outputBuffer[BUFFER_SIZE];
 	unsigned int bufferPosition = 0;
 
@@ -260,8 +262,9 @@ void disassemble(
 	fpga_str_init(&lparen, "(");
 	fpga_str_init(&rparen, ")");
 
-	for(int i = 0; i < size_in; i += 4){
+	disassembler : for(int i = 0; i < size_in; i += 4){
 #pragma HLS pipeline
+
 		instruction = 	(instructions[i] << 24) | 
 						(instructions[i + 1] << 16)|
 						(instructions[i + 2] << 8) |
@@ -322,16 +325,18 @@ void disassemble(
 				fpga_str_append(&instructionString, &newline);
 		}
 
+		bufferPosition += instructionString.size;
+
 		// WRITE STRING TO BUFFER
 		// USE PRAMA TO OPTIMIZE PIPELINE
-		for(unsigned int j = 0; j < (instructionString.size); j++){
-			// outputBuffer[j + bufferPosition] = instructionString.value[j];
+		int j;
+		for(j = 0; j < (instructionString.size); j++){
+			#pragma HLS PIPELINE
+			outputBuffer[j] = instructionString.value[j];
 		}
-		bufferPosition += instructionString.size;
+		
+		for(j = 0; j < (instructionString.size); j++){
+			out[bufferPosition + j] = outputBuffer[j];
+		}
 	}
-
-	for(int j = 0; j < bufferPosition; j++){
-		// out[i] = outputBuffer[i];
-	}
-
 }

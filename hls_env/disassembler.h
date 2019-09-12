@@ -15,8 +15,8 @@ void getImmediate(int, fpga_string* );
 instruction_type getInstructionType(unsigned int);
 
 void disassemble(
-		unsigned char *instructions,
-		unsigned char *out,
+		unsigned char instructions[BUFFER_SIZE],
+		unsigned char out[BUFFER_SIZE],
 		unsigned int size_in,
 		unsigned int size_out);
 
