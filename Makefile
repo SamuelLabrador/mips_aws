@@ -1,9 +1,12 @@
 
-c: obj/host.o obj/disassembler.o
+run: bin/disassembler
+	./bin/disassembler
+
+all: obj/host.o
 	g++ -o bin/disassembler obj/*
 
 # Host obj file generation
-h: include/defs.h src/host.cpp
+host: include/defs.h src/host.cpp
 	g++ -Iinclude -c -o obj/host.o src/host.cpp -w
 
 s: include/fpga_string.h src/fpga_string.c

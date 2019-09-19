@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <stdint.h>
 #include <stdio.h>
-#include "disassembler.h"
+// #include "disassembler.h"
 
-#define DATA_SIZE 16384
+#define DATA_SIZE 32768
 
 unsigned int getHalf(unsigned char* buffer, unsigned int* byte){
 	unsigned int half = (buffer[*byte] << 8) | buffer[*byte + 1];
@@ -141,6 +141,7 @@ int main(int argc, char** argv){
 
 	// Parse Section Table
 	byte = shoff;
+	
 	for(int i = 0; i < shnum; i++){
 		unsigned int sh_name = getWord(buffer, &byte);
 		unsigned int sh_type = getWord(buffer, &byte);
@@ -168,7 +169,7 @@ int main(int argc, char** argv){
 				else{
 					size = DATA_SIZE;
 				}
-				disassemble(buffer + offset, size);
+				// disassemble(buffer + offset, size);
 			}
 		}
 	}
