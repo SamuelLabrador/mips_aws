@@ -1,1 +1,0 @@
-Object files for compilation should be stored in this directory
